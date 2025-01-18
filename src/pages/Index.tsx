@@ -1,12 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useArticles } from "@/hooks/use-articles";
+import { Article } from "@/components/Article";
+import { Loader2 } from "lucide-react";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+  const { data: articles, isLoading, error } = useArticles();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-screen flex items-center justify-center text-red-500">
+        Failed to load articles
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen">
+      {articles?.map((article) => (
+        <Article key={article.id} article={article} />
+      ))}
     </div>
   );
 };
