@@ -13,7 +13,7 @@ export function Article({ article }: ArticleProps) {
   return (
     <>
       <div 
-        className="full-screen-article relative cursor-pointer" 
+        className="full-screen-article relative cursor-pointer snap-start" 
         onClick={() => setIsOpen(true)}
       >
         <div className="absolute inset-0">
@@ -28,11 +28,11 @@ export function Article({ article }: ArticleProps) {
         </div>
         <div className="relative h-full flex flex-col justify-end p-8 text-white">
           <h2 
-            className="text-4xl font-serif mb-4"
+            className="text-lg font-serif mb-4"
             dangerouslySetInnerHTML={{ __html: article.title.rendered }}
           />
           <div 
-            className="text-lg text-gray-200"
+            className="text-sm text-gray-200"
             dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}
           />
         </div>

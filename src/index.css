@@ -56,6 +56,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    scroll-behavior: smooth;
   }
 }
 
@@ -65,16 +66,14 @@
   }
 }
 
-.article-transition {
-  transition: transform 0.5s ease-in-out;
-}
-
 html {
   scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 .full-screen-article {
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   height: 100vh;
   overflow: hidden;
 }
