@@ -59,8 +59,10 @@
   }
 }
 
-.article-content {
-  @apply prose prose-lg max-w-none prose-headings:font-serif prose-p:text-gray-600;
+@layer components {
+  .article-content {
+    @apply prose prose-lg max-w-none prose-headings:font-serif prose-p:text-gray-600;
+  }
 }
 
 .article-transition {
