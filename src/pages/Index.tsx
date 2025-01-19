@@ -32,9 +32,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {data?.pages.map((page) =>
+      {data?.pages.map((page, pageIndex) =>
         page.map((article) => (
-          <Article key={article.id} article={article} />
+          <Article key={`${pageIndex}-${article.id}`} article={article} />
         ))
       )}
       <div ref={ref} className="h-20 flex items-center justify-center">

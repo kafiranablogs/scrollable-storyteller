@@ -3,7 +3,7 @@ import { WordPressArticle } from "@/types/article";
 
 const PER_PAGE = 5;
 
-const fetchArticles = async ({ pageParam = 1 }): Promise<WordPressArticle[]> => {
+const fetchArticles = async ({ pageParam = 1 }) => {
   const response = await fetch(
     `https://kafirana.com/wp-json/wp/v2/posts?_embed&per_page=${PER_PAGE}&page=${pageParam}`
   );
@@ -14,10 +14,12 @@ const fetchArticles = async ({ pageParam = 1 }): Promise<WordPressArticle[]> => 
 };
 
 export function useArticles() {
-  return useInfiniteQuery({
+  return useInfiniteQuery<WordPressArticle[]>({
     queryKey: ["articles"],
-    queryFn: fetchArticles,
-    getNextPageParam: (_, pages) => pages.length + 1,
+    queryFn: ({ pageParam = 1 }) => fetchArticles({ pageParam }),
+    getNextPageParam: (_, pages) => {
+      return pages.length + 1;
+    },
     initialPageSize: PER_PAGE,
   });
 }
