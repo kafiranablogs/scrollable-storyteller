@@ -39,22 +39,26 @@ export function Article({ article }: ArticleProps) {
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto">
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt={article.title.rendered}
-              className="w-full h-64 object-cover rounded-t-lg"
+        <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto p-0">
+          <div className="p-6">
+            <h1 
+              className="text-3xl font-serif mb-6"
+              dangerouslySetInnerHTML={{ __html: article.title.rendered }}
             />
-          )}
-          <h1 
-            className="text-3xl font-serif mt-6 mb-4"
-            dangerouslySetInnerHTML={{ __html: article.title.rendered }}
-          />
-          <div 
-            className="article-content"
-            dangerouslySetInnerHTML={{ __html: article.content.rendered }}
-          />
+            <div className="relative w-full aspect-video mb-6">
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt={article.title.rendered}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              )}
+            </div>
+            <div 
+              className="article-content"
+              dangerouslySetInnerHTML={{ __html: article.content.rendered }}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </>

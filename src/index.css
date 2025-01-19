@@ -67,7 +67,7 @@
 }
 
 html {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
 }
 
@@ -76,4 +76,15 @@ html {
   scroll-snap-stop: always;
   height: 100vh;
   overflow: hidden;
+  transition: all 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+  .full-screen-article {
+    height: 100dvh;
+  }
+  
+  .article-content {
+    @apply prose-sm;
+  }
 }
