@@ -1,9 +1,18 @@
 import { useArticles } from "@/hooks/use-articles";
 import { Article } from "@/components/Article";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 const Index = () => {
-  const { data: articles, isLoading, error } = useArticles();
+  const { data, isLoading, error, fetchNextPage, hasNextPage } = useArticles();
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
   if (isLoading) {
     return (
@@ -23,9 +32,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {articles?.map((article) => (
-        <Article key={article.id} article={article} />
-      ))}
+      {data?.pages.map((page) =>
+        page.map((article) => (
+          <Article key={article.id} article={article} />
+        ))
+      )}
+      <div ref={ref} className="h-20 flex items-center justify-center">
+        {hasNextPage && <Loader2 className="h-6 w-6 animate-spin" />}
+      </div>
     </div>
   );
 };
