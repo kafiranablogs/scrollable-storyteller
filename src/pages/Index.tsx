@@ -3,6 +3,7 @@ import { Article } from "@/components/Article";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { WordPressArticle } from "@/types/article";
 
 const Index = () => {
   const { data, isLoading, error, fetchNextPage, hasNextPage } = useArticles();
@@ -33,7 +34,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {data?.pages.map((page) =>
-        page.map((article) => (
+        page.map((article: WordPressArticle) => (
           <Article key={article.id} article={article} />
         ))
       )}
