@@ -45,15 +45,6 @@ export function Article({ article }: ArticleProps) {
               className="text-3xl font-serif mb-6"
               dangerouslySetInnerHTML={{ __html: article.title.rendered }}
             />
-            <div className="relative w-full aspect-video mb-6">
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt={article.title.rendered}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              )}
-            </div>
             <div 
               className="article-content"
               dangerouslySetInnerHTML={{ __html: article.content.rendered }}

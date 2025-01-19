@@ -18,8 +18,8 @@ export function useArticles() {
     queryKey: ["articles"],
     queryFn: ({ pageParam = 1 }) => fetchArticles({ pageParam }),
     getNextPageParam: (_, pages) => {
+      if (!pages) return undefined;
       return pages.length + 1;
-    },
-    initialPageSize: PER_PAGE,
+    }
   });
 }
