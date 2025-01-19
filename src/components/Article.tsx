@@ -46,7 +46,7 @@ export function Article({ article }: ArticleProps) {
               dangerouslySetInnerHTML={{ __html: article.title.rendered }}
             />
             <div 
-              className="article-content"
+              className="prose prose-sm md:prose-base lg:prose-lg mx-auto"
               dangerouslySetInnerHTML={{ __html: article.content.rendered }}
             />
           </div>

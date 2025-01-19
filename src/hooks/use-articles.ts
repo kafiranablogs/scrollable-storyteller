@@ -3,20 +3,21 @@ import { WordPressArticle } from "@/types/article";
 
 const PER_PAGE = 5;
 
-const fetchArticles = async ({ pageParam = 1 }) => {
+async function fetchArticles({ pageParam }: { pageParam: number }) {
   const response = await fetch(
-    `https://kafirana.com/wp-json/wp/v2/posts?_embed&per_page=${PER_PAGE}&page=${pageParam}`
+    `https://techcrunch.com/wp-json/wp/v2/posts?page=${pageParam}&per_page=${PER_PAGE}&_embed=true`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch articles");
+    throw new Error("Network response was not ok");
   }
   return response.json();
-};
+}
 
 export function useArticles() {
   return useInfiniteQuery<WordPressArticle[]>({
     queryKey: ["articles"],
-    queryFn: ({ pageParam = 1 }) => fetchArticles({ pageParam }),
+    queryFn: ({ pageParam }) => fetchArticles({ pageParam }),
+    initialPageParam: 1,
     getNextPageParam: (_, pages) => {
       if (!pages) return undefined;
       return pages.length + 1;
