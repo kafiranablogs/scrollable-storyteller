@@ -1,6 +1,8 @@
 import { WordPressArticle } from "@/types/article";
 import { useState } from "react";
 import { Dialog, DialogContent } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { X } from "lucide-react";
 
 interface ArticleProps {
   article: WordPressArticle;
@@ -58,6 +60,16 @@ export function Article({ article }: ArticleProps) {
               className="article-content"
               dangerouslySetInnerHTML={{ __html: article.content.rendered }}
             />
+            <div className="mt-8 flex justify-center">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsOpen(false)}
+                className="gap-2"
+              >
+                <X className="h-4 w-4" />
+                Close Article
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
