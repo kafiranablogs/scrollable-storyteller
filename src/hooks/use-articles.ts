@@ -18,7 +18,7 @@ export function useArticles() {
     queryKey: ["articles"],
     queryFn: ({ pageParam }) => fetchArticles({ pageParam }),
     initialPageParam: 1,
-    getNextPageParam: (_, pages) => {
+    getNextPageParam: (_, pages): number | undefined => {
       if (!pages) return undefined;
       return pages.length + 1;
     }
