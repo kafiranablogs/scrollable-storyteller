@@ -12,9 +12,6 @@ export function Article({ article }: ArticleProps) {
   const [isOpen, setIsOpen] = useState(false);
   const imageUrl = article._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
-  // Remove figure tags from content
-  const cleanContent = article.content.rendered.replace(/<figure[^>]*>.*?<\/figure>/g, '');
-
   return (
     <>
       <div 
@@ -47,35 +44,21 @@ export function Article({ article }: ArticleProps) {
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto p-0">
-          <div className="p-6">
-            <h1 
-              className="text-3xl font-serif mb-6"
-              dangerouslySetInnerHTML={{ __html: article.title.rendered }}
-            />
-            <div className="relative w-full aspect-video mb-6">
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt={article.title.rendered}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              )}
-            </div>
-            <div 
-              className="article-content"
-              dangerouslySetInnerHTML={{ __html: cleanContent }}
-            />
-            <div className="mt-8 flex justify-center">
-              <Button 
-                variant="outline" 
-                onClick={() => setIsOpen(false)}
-                className="gap-2 bg-[#1A1F2C] text-white hover:bg-[#2A2F3C] border-none"
-              >
-                <X className="h-4 w-4" />
-                Close Article
-              </Button>
-            </div>
+        <DialogContent className="max-w-4xl h-[90vh] p-0">
+          <iframe
+            src={article.link}
+            className="w-full h-full border-none"
+            title={article.title.rendered}
+          />
+          <div className="absolute right-4 top-4">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsOpen(false)}
+              className="gap-2 bg-[#1A1F2C] text-white hover:bg-[#2A2F3C] border-none"
+            >
+              <X className="h-4 w-4" />
+              Close Article
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
