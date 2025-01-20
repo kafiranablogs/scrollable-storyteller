@@ -69,22 +69,29 @@
 html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 .full-screen-article {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  min-height: 100vh;
   height: 100vh;
+  position: relative;
   overflow: hidden;
-  transition: all 0.3s ease-out;
 }
 
 @media (max-width: 768px) {
   .full-screen-article {
     height: 100dvh;
+    min-height: 100dvh;
   }
   
   .article-content {
     @apply prose-sm;
+  }
+  
+  .article-content img {
+    @apply w-full h-auto;
   }
 }

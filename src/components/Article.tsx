@@ -12,29 +12,34 @@ export function Article({ article }: ArticleProps) {
   const [isOpen, setIsOpen] = useState(false);
   const imageUrl = article._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
+  // Remove figure tags from content
+  const cleanContent = article.content.rendered.replace(/<figure[^>]*>.*?<\/figure>/g, '');
+
   return (
     <>
       <div 
-        className="full-screen-article relative cursor-pointer snap-start" 
+        className="full-screen-article relative cursor-pointer" 
         onClick={() => setIsOpen(true)}
       >
         <div className="absolute inset-0">
           {imageUrl && (
-            <img
-              src={imageUrl}
-              alt={article.title.rendered}
-              className="w-full h-full object-cover"
-            />
+            <div className="relative w-full h-full">
+              <img
+                src={imageUrl}
+                alt={article.title.rendered}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
         <div className="relative h-full flex flex-col justify-end p-8 text-white">
           <h2 
-            className="text-lg font-serif mb-4"
+            className="text-2xl md:text-3xl font-serif mb-4"
             dangerouslySetInnerHTML={{ __html: article.title.rendered }}
           />
           <div 
-            className="text-sm text-gray-200"
+            className="text-sm md:text-base text-gray-200"
             dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}
           />
         </div>
@@ -58,7 +63,7 @@ export function Article({ article }: ArticleProps) {
             </div>
             <div 
               className="article-content"
-              dangerouslySetInnerHTML={{ __html: article.content.rendered }}
+              dangerouslySetInnerHTML={{ __html: cleanContent }}
             />
             <div className="mt-8 flex justify-center">
               <Button 
