@@ -79,6 +79,8 @@ html {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {
@@ -92,6 +94,6 @@ html {
   }
   
   .article-content img {
-    @apply w-full h-auto;
+    @apply w-full h-auto object-contain;
   }
 }

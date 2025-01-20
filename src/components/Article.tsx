@@ -27,13 +27,14 @@ export function Article({ article }: ArticleProps) {
               <img
                 src={imageUrl}
                 alt={article.title.rendered}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover md:object-cover"
+                style={{ objectPosition: 'center' }}
               />
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
-        <div className="relative h-full flex flex-col justify-end p-8 text-white">
+        <div className="relative h-full flex flex-col justify-end p-4 md:p-8 text-white">
           <h2 
             className="text-2xl md:text-3xl font-serif mb-4"
             dangerouslySetInnerHTML={{ __html: article.title.rendered }}
