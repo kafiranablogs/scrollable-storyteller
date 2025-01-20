@@ -70,7 +70,7 @@ export function Article({ article }: ArticleProps) {
               <Button 
                 variant="outline" 
                 onClick={() => setIsOpen(false)}
-                className="gap-2"
+                className="gap-2 bg-[#1A1F2C] text-white hover:bg-[#2A2F3C] border-none"
               >
                 <X className="h-4 w-4" />
                 Close Article
