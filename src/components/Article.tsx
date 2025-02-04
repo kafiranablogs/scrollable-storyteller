@@ -2,7 +2,7 @@ import { WordPressArticle } from "@/types/article";
 import { useState } from "react";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { X } from "lucide-react";
+import { Share2, X } from "lucide-react";
 
 interface ArticleProps {
   article: WordPressArticle;
@@ -11,6 +11,23 @@ interface ArticleProps {
 export function Article({ article }: ArticleProps) {
   const [isOpen, setIsOpen] = useState(false);
   const imageUrl = article._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: article.title.rendered,
+          url: article.link
+        });
+      } else {
+        // Fallback to copying to clipboard
+        await navigator.clipboard.writeText(article.link);
+        // Note: You might want to add a toast notification here
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
 
   return (
     <>
@@ -32,10 +49,23 @@ export function Article({ article }: ArticleProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
         <div className="relative h-full flex flex-col justify-end p-4 md:p-8 text-white">
-          <h2 
-            className="text-2xl md:text-3xl font-serif mb-4"
-            dangerouslySetInnerHTML={{ __html: article.title.rendered }}
-          />
+          <div className="flex items-center justify-between mb-4">
+            <h2 
+              className="text-2xl md:text-3xl font-serif"
+              dangerouslySetInnerHTML={{ __html: article.title.rendered }}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/20"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShare();
+              }}
+            >
+              <Share2 className="h-5 w-5" />
+            </Button>
+          </div>
           <div 
             className="text-sm md:text-base text-gray-200"
             dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}
