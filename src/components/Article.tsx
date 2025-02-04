@@ -57,7 +57,7 @@ export function Article({ article }: ArticleProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="text-white hover:bg-white/20"
+              className="bg-white text-black hover:bg-white/90"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
