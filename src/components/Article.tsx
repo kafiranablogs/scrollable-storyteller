@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Share2, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ArticleProps {
   article: WordPressArticle;
@@ -11,8 +12,10 @@ interface ArticleProps {
 export function Article({ article }: ArticleProps) {
   const [isOpen, setIsOpen] = useState(false);
   const imageUrl = article._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const { toast } = useToast();
 
-  const handleShare = async () => {
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     try {
       if (navigator.share) {
         await navigator.share({
@@ -20,12 +23,21 @@ export function Article({ article }: ArticleProps) {
           url: article.link
         });
       } else {
-        // Fallback to copying to clipboard
         await navigator.clipboard.writeText(article.link);
-        // Note: You might want to add a toast notification here
+        toast({
+          title: "Link copied",
+          description: "Article link has been copied to clipboard",
+          duration: 2000,
+        });
       }
     } catch (error) {
       console.error('Error sharing:', error);
+      toast({
+        title: "Error",
+        description: "Failed to share or copy link",
+        variant: "destructive",
+        duration: 2000,
+      });
     }
   };
 
@@ -58,10 +70,7 @@ export function Article({ article }: ArticleProps) {
               variant="ghost"
               size="icon"
               className="bg-white text-black hover:bg-white/90"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleShare();
-              }}
+              onClick={handleShare}
             >
               <Share2 className="h-5 w-5" />
             </Button>
