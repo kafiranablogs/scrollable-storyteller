@@ -79,7 +79,7 @@ export function Article({ article }: ArticleProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="bg-white text-black hover:bg-white/90"
+              className="bg-white text-black hover:bg-white/90 w-10 md:w-auto shrink-0"
               onClick={handleShare}
             >
               <Share2 className="h-5 w-5" />
