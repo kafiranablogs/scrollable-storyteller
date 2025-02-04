@@ -16,28 +16,38 @@ export function Article({ article }: ArticleProps) {
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    // First try clipboard API as it's more widely supported
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: article.title.rendered,
-          url: article.link
-        });
-      } else {
-        await navigator.clipboard.writeText(article.link);
+      await navigator.clipboard.writeText(article.link);
+      toast({
+        title: "Success",
+        description: "Article link has been copied to clipboard",
+        duration: 2000,
+      });
+      return;
+    } catch (clipboardError) {
+      console.error('Clipboard error:', clipboardError);
+      
+      // If clipboard fails, try Web Share API
+      try {
+        if (navigator.share) {
+          await navigator.share({
+            title: article.title.rendered,
+            url: article.link
+          });
+        } else {
+          throw new Error("Share API not supported");
+        }
+      } catch (shareError) {
+        console.error('Share error:', shareError);
         toast({
-          title: "Link copied",
-          description: "Article link has been copied to clipboard",
+          title: "Error",
+          description: "Failed to share or copy link. Please try again.",
+          variant: "destructive",
           duration: 2000,
         });
       }
-    } catch (error) {
-      console.error('Error sharing:', error);
-      toast({
-        title: "Error",
-        description: "Failed to share or copy link",
-        variant: "destructive",
-        duration: 2000,
-      });
     }
   };
 
