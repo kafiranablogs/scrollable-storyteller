@@ -11,17 +11,22 @@ export const AdUnit = () => {
   const adRef = useRef<HTMLModElement>(null);
 
   useEffect(() => {
-    try {
-      console.log('Attempting to load ad...');
-      console.log('adsbygoogle available:', !!window.adsbygoogle);
-      
-      if (adRef.current && window.adsbygoogle) {
-        console.log('Pushing ad to adsbygoogle');
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    const loadAd = () => {
+      try {
+        console.log('Attempting to load ad...');
+        if (typeof window.adsbygoogle !== 'undefined') {
+          console.log('AdSense script loaded, pushing ad');
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } else {
+          console.log('AdSense not loaded yet, retrying in 1 second');
+          setTimeout(loadAd, 1000);
+        }
+      } catch (error) {
+        console.error('Error loading ad:', error);
       }
-    } catch (error) {
-      console.error('Error loading ad:', error);
-    }
+    };
+
+    loadAd();
   }, []);
 
   return (
