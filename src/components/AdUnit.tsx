@@ -8,7 +8,7 @@ declare global {
 }
 
 export const AdUnit = () => {
-  const adRef = useRef<HTMLElement>(null);
+  const adRef = useRef<HTMLModElement>(null);
 
   useEffect(() => {
     try {
