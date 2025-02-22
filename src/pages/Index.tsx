@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { useArticles } from "@/hooks/use-articles";
 import { Article } from "@/components/Article";
 import { Loader2 } from "lucide-react";
