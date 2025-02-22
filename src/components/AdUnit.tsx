@@ -12,7 +12,11 @@ export const AdUnit = () => {
 
   useEffect(() => {
     try {
+      console.log('Attempting to load ad...');
+      console.log('adsbygoogle available:', !!window.adsbygoogle);
+      
       if (adRef.current && window.adsbygoogle) {
+        console.log('Pushing ad to adsbygoogle');
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
     } catch (error) {
@@ -21,7 +25,7 @@ export const AdUnit = () => {
   }, []);
 
   return (
-    <div className="w-full my-4 flex justify-center">
+    <div className="w-full my-4 flex justify-center border-2 border-dashed border-gray-300 bg-gray-50">
       <ins
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', height: '250px' }}
