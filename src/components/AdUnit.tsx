@@ -8,7 +8,7 @@ declare global {
 }
 
 export const AdUnit = () => {
-  const adRef = useRef<HTMLElement>(null);
+  const adRef = useRef<HTMLInsElement>(null);
 
   useEffect(() => {
     try {
@@ -25,7 +25,7 @@ export const AdUnit = () => {
       <ins
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', height: '90px' }}
-        data-ad-client={process.env.REACT_APP_GOOGLE_ADS_CLIENT_ID || 'your-client-id'}
+        data-ad-client="your-client-id"
         data-ad-slot="your-ad-slot-id"
         data-ad-format="auto"
         data-full-width-responsive="true"
